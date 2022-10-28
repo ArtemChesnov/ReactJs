@@ -7,8 +7,10 @@ export const Users = ({
   isLoading,
   onChangeSearchValue,
   searchValue,
+  invites,
+  onClickInvite,
+  onClickSendInvites,
 }) => {
-  console.log(searchValue)
   return (
     <>
       <div className="search">
@@ -40,11 +42,23 @@ export const Users = ({
               )
             })
             .map((obj) => {
-              return <User key={obj.id} {...obj} />
+              return (
+                <User
+                  onClickInvite={onClickInvite}
+                  isInvited={invites.includes(obj.id)}
+                  key={obj.id}
+                  {...obj}
+                />
+              )
             })}
         </ul>
       )}
-      <button className="send-invite-btn">Отправить приглашение</button>
+
+      {invites.length > 0 && (
+        <button onClick={onClickSendInvites} className="send-invite-btn">
+          Отправить приглашение
+        </button>
+      )}
     </>
   )
 }
